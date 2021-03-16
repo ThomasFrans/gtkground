@@ -1,2 +1,2 @@
 # gtkground
-A playground for GTK stuff
+A playground for GTK stuff and just learning
