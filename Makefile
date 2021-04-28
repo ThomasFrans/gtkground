@@ -1,9 +1,9 @@
 all: build
 
-build : gtkground.c
+build : gtkground.cpp
 
-gtkground.c:
-	gcc -o bin/gtkground src/main.c `pkg-config --cflags --libs gtk+-3.0`
+gtkground.cpp:
+	g++ -o bin/MakeGUI src/InputPrompt.cpp src/main.cpp -Isrc/include `pkg-config --cflags --libs gtkmm-3.0`
 	
 clean:
 	rm -r bin/*
