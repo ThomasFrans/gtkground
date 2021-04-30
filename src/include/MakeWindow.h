@@ -21,5 +21,6 @@ private:
     Gtk::Grid m_grid;
     Gtk::FlowBox m_flowBox;
     Glib::RefPtr<Gtk::CssProvider> m_css;
+    Glib::RefPtr<Gtk::Application> m_app;
     const char* m_makeDir;
 };

@@ -1,31 +1,30 @@
 #include "MakeWindow.h"
 
+#include <iostream>
+#include <string>
+#include <vector>
+
+#include "MakefileParser.h"
+
 MakeWindow::MakeWindow(const char *makeDir)
 {
+    m_app = Gtk::Application::create();
     this->m_makeDir = makeDir;
     m_css = Gtk::CssProvider::create();
     m_css->load_from_path("/home/thomas/Documents/Programming/gtkground/src/theme.css");
 
-    std::string line;
+ 
     std::string makefilePath(m_makeDir);
     makefilePath.append("/Makefile");
-    std::ifstream makefile(makefilePath);
-    if (makefile.is_open())
-    {
-        while (std::getline(makefile, line))
-        {
-            if (line.find(":") != std::string::npos)
-            {
-                int pos = line.find(":");
-                for (int i = pos; i < line.size(); i++)
-                {
-                    line.erase(i);
-                }
-                Gtk::Button *temp = new Gtk::Button(line);
-                m_buttons.push_back(temp);
-            }
-        }
-        makefile.close();
+
+
+    MakefileParser parser(makefilePath.c_str());
+    std::vector<std::string> targets;
+    parser.getTargets(&targets);
+
+    for (std::string target : targets) {
+        Gtk::Button *temp = new Gtk::Button(target);
+        m_buttons.push_back(temp);
     }
 
     for (int i = 0; i < m_buttons.size(); i++)
@@ -36,7 +35,7 @@ MakeWindow::MakeWindow(const char *makeDir)
     }
 
     Glib::RefPtr<Gtk::StyleContext> ctx = get_style_context();
-    ctx->add_provider_for_screen(Gdk::Screen::get_default(), m_css, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION); /*also tried different priorities*/
+    ctx->add_provider_for_screen(Gdk::Screen::get_default(), m_css, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
     set_icon_from_file("/home/thomas/Documents/Programming/gtkground/res/gnu_make.png");
     set_title("Make GUI");
@@ -47,6 +46,7 @@ MakeWindow::MakeWindow(const char *makeDir)
 
     set_size_request(200, -1);
     present();
+    m_app->run(*this);
 }
 
 void MakeWindow::system_execute(std::string command)
