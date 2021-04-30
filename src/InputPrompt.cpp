@@ -1,10 +1,12 @@
 #include "InputPrompt.h"
 #include <iostream>
 
-InputPrompt::InputPrompt()
-: m_label("Enter the path to a Makefile"),
-m_buttonConfirm("Confirm")
+InputPrompt::InputPrompt(std::string *buffer)
+    : m_label("Enter the path to a Makefile"),
+      m_buttonConfirm("Confirm")
 {
+    this->m_buffer = buffer;
+
     set_title("Makefile path");
 
     add(this->m_grid);
@@ -24,16 +26,10 @@ m_buttonConfirm("Confirm")
 
 void InputPrompt::on_button_confirm()
 {
+    *m_buffer = m_entry.get_text();
     close();
-}
-
-std::string* InputPrompt::get_the_text()
-{
-    
-    return new std::string(m_entry.get_text());
 }
 
 InputPrompt::~InputPrompt()
 {
-
 }

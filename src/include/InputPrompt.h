@@ -12,9 +12,8 @@
 class InputPrompt : public Gtk::Window
 {
 public:
-    InputPrompt();
+    InputPrompt(std::string *buffer);
     virtual ~InputPrompt();
-    std::string* get_the_text();
 
 protected:
     //Signal handlers:
@@ -25,5 +24,5 @@ protected:
     Gtk::Label m_label;
     Gtk::Entry m_entry;
     Gtk::Button m_buttonConfirm;
-    std::string* m_buffer;
+    std::string *m_buffer;
 };

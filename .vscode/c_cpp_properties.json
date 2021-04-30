@@ -42,9 +42,15 @@
                 "/usr/include/libmount",
                 "/usr/include/blkid",
                 "/usr/include/glib-2.0",
-                "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+                "/usr/lib/x86_64-linux-gnu/glib-2.0/include",
+                "${workspaceFolder}/src/include"
             ],
-            "compilerArgs": ["-o", "bin/gtkground", "src/main.c", "`pkg-config --cflags --libs gtkmm-3.0`"],
+            "compilerArgs": [
+                "-o",
+                "bin/gtkground",
+                "src/main.c",
+                "`pkg-config --cflags --libs gtkmm-3.0`"
+            ],
             "defines": [],
             "compilerPath": "/usr/bin/g++",
             "cStandard": "c17",
